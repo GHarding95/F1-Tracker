@@ -3,10 +3,12 @@ import { DriverStanding } from './types';
 
 type CardProps = {
   driverStanding: DriverStanding;
+  isFirstDriver: Boolean;
 };
 
-const Card: React.FC<CardProps> = ({ driverStanding }) => {
+const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver }) => {
   const { Driver, Constructors, points } = driverStanding;
+  const permanentNumber = isFirstDriver ? '1' : Driver.permanentNumber;
 
   return (
     <>
@@ -14,6 +16,7 @@ const Card: React.FC<CardProps> = ({ driverStanding }) => {
       <p>Points: {points}</p>
       <p>Nationality: {Driver.nationality}</p>
       <p>Team: {Constructors[0].name}</p>
+      <p>{permanentNumber}</p>
     </>
   );
 };
