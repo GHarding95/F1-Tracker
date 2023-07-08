@@ -12,6 +12,7 @@ const DriverCard: React.FC<DriverCardProps> = ({ driverStanding }) => {
       <p>Position: {driverStanding.position}</p>
       <p>Points: {driverStanding.points}</p>
       <p>Nationality: {driverStanding.Driver.nationality}</p>
+      <p>Team: {driverStanding.Constructors.name}</p>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-export interface DriverStanding {
+export interface DriverStanding {    
     position: string;
     points: string;
     Driver: {
@@ -7,5 +7,13 @@ export interface DriverStanding {
       familyName: string;
       nationality: string;
     };
+    Constructors: {
+      constructorId: string;
+      url: string;
+      name: string;
+      nationality: string;
+    };
   }
+  
+
   

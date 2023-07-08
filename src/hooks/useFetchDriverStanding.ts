@@ -12,8 +12,7 @@ const useFetchDriverStandings = () => {
         const response = await axios.get(
           'http://ergast.com/api/f1/current/driverStandings.json'
         );
-        const standingsData = response.data.MRData.StandingsTable.StandingsLists[0]
-          .DriverStandings;
+        const standingsData = response.data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
         setDriverStandings(standingsData);
       } catch (error) {
         console.error('Error fetching driver standings:', error);
