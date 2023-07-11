@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const currentYear = getCurrentYear();
 
   return (
-    <div>
+    <>
       <h1>F1 {currentYear} Drivers</h1>      
       {driverStandings.map((standing, index) => (
         <Card
@@ -20,7 +20,7 @@ const App: React.FC = () => {
           isFirstDriver={index === 0}
         />
       ))}
-    </div>
+    </>
   );
 };
 
