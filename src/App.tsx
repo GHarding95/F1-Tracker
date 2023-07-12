@@ -13,7 +13,7 @@ const App: React.FC = () => {
   return (
     <>
     <div className='driver-card-wrapper'>
-      <h1>F1 {currentYear} Drivers</h1>      
+      <h1 className='font-bold'>F1 {currentYear} Drivers</h1>      
       {driverStandings.map((standing, index) => (
         <Card
           key={index}

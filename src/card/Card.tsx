@@ -55,15 +55,16 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
     <>
       <div className='driver-card'>
 
-        <div>
-          <p>{position}</p>
+        <div className='flex'>
+          <p className='pr-5'>{position}</p>
           <p>Points: {points}</p>
         </div>
-
-        <h2>
-          {`${Driver.givenName} ${Driver.familyName}`}
-          {flagImage && <img className='flag' src={flagImage} alt="Flag"/>}
-        </h2>        
+        
+          <h3>{Driver.givenName}</h3>
+          <div className='flex'>
+            <h2>{Driver.familyName}</h2>        
+            {flagImage && <img className='flag' src={flagImage} alt="Flag"/>}
+          </div>
 
         <p>Team: {Constructors[0].name}</p>
         <p>{permanentNumber}</p>
