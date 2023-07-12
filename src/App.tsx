@@ -12,14 +12,17 @@ const App: React.FC = () => {
 
   return (
     <>
+    <div className='driver-card-wrapper'>
       <h1>F1 {currentYear} Drivers</h1>      
       {driverStandings.map((standing, index) => (
         <Card
           key={index}
           driverStanding={standing}
           isFirstDriver={index === 0}
+          position={index + 1}
         />
       ))}
+  </div>
     </>
   );
 };

@@ -42,24 +42,32 @@ const flagMap: FlagMap = {
 type CardProps = {
   driverStanding: DriverStanding;
   isFirstDriver: boolean;
+  position: number;
 };
 
-const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver }) => {
+const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  }) => {
   const { Driver, Constructors, points } = driverStanding;
   const permanentNumber = isFirstDriver ? '1' : Driver.permanentNumber;
   const flagImage = flagMap[Driver.nationality];
+  
 
   return (
     <>
       <div className='driver-card'>
+
+        <div>
+          <p>{position}</p>
+          <p>Points: {points}</p>
+        </div>
+
         <h2>
           {`${Driver.givenName} ${Driver.familyName}`}
           {flagImage && <img className='flag' src={flagImage} alt="Flag"/>}
-        </h2>
-        <p>Points: {points}</p>
-        <p>Nationality: {Driver.nationality}</p>
+        </h2>        
+
         <p>Team: {Constructors[0].name}</p>
         <p>{permanentNumber}</p>
+        
       </div>
     </>
   );

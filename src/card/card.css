@@ -3,3 +3,12 @@
     padding: 0 10px 0 10px;
     border-radius: 20%;
 }
+
+.driver-card{
+    border: 2px solid #000;
+    margin: 20px 20px 20px 0px;
+}
+
+.driver-card-wrapper{
+    padding: 0 20px 0 20px;
+}
