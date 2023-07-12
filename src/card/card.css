@@ -1,13 +1,13 @@
 .flag{
-    width: 60px;
-    height: 25px;
-    padding: 0 10px 0 10px;
+    /* width: 60px; */
+    height: 25px;    
     border-radius: 20%;
 }
 
 .driver-card{
     border: 2px solid #000;
     margin: 20px 20px 20px 0px;
+    padding: 0 10px 0 10px;
 }
 
 .driver-card-wrapper{

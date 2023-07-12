@@ -26,7 +26,7 @@ const flagMap: FlagMap = {
   Mexican: flagMexican,
   Spanish: flagSpanish,
   British: flagBritish,
-  Monaco: flagMonaco,
+  Monegasque: flagMonaco,
   Canadian: flagCanadian,
   French: flagFrench,
   Australian: flagAustralian,
@@ -61,8 +61,8 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
         </div>
         
           <h3>{Driver.givenName}</h3>
-          <div className='flex'>
-            <h2>{Driver.familyName}</h2>        
+          <div className='md:flex'>
+            <h2 className='pr-2'>{Driver.familyName}</h2>        
             {flagImage && <img className='flag' src={flagImage} alt="Flag"/>}
           </div>
 
