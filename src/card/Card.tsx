@@ -58,7 +58,7 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
         <div className='flex justify-between border-b-[1px] text-3xl font-bold py-3'>
           <p className='F1-Bold text-5xl'>{position}</p>
           <div className='ml-auto F1'>
-            <p className='text-xl'>{points}</p>
+            <p className='text-xl text-center'>{points}</p>
             <p className='text-white bg-black text-sm text-center '>PTS</p>
           </div>          
         </div>
