@@ -22,7 +22,7 @@ const App: React.FC = () => {
       const rowDrivers = driverStandings.slice(start, end);
 
       rows.push(
-        <div className="flex mb-4" key={i}>
+        <div className="flex justify-evenly mb-4" key={i}>
           {rowDrivers.map((standing, index) => (
             <Card
               key={index}
@@ -38,10 +38,12 @@ const App: React.FC = () => {
     return rows;
   };
 
-  return (  
-    <div className="driver-card-wrapper">
-      <h1 className="font-bold text-3xl mb-4">F1 {currentYear} Drivers</h1>
-      {renderCards()}
+  return (
+    <div className='container mx-auto'>
+      <div className="driver-card-wrapper">
+        <h1 className="font-bold text-3xl mb-4">F1 {currentYear} Drivers</h1>
+        {renderCards()}
+      </div>
     </div>
   );
 };

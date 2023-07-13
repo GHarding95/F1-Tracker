@@ -1,6 +1,5 @@
 .flag{
-    /* width: 60px; */
-    height: 25px;    
+    height: 35px;    
     border-radius: 20%;
 }
 
@@ -10,6 +9,7 @@
     border-right: 3px solid black;
     margin: 20px 20px 20px 0px;
     padding: 0 10px 0 10px;
+    width: 100%;
 }
 
 .driver-card-wrapper{

@@ -19,20 +19,37 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: F1-Bold;
-  src: url(./assets/fonts/Formula1-Bold.otf);
+  font-family: F1;
+  src: url(./assets/fonts/Formula1-Regular.ttf);
 }
 
 @font-face {
-  font-family: F1;
-  src: url(./assets/fonts/Formula1-Regular.otf);
+  font-family: F1-Bold;
+  src: url(./assets/fonts/Formula1-Bold.ttf);
 }
 
-h1{
+@font-face {
+  font-family: F1-Wide;
+  src: url(./assets/fonts/Formula1-Wide.ttf);
+}
+
+.F1{
+  font-family: 'F1';
+}
+
+.F1-Bold{
   font-family: 'F1-Bold';
 }
 
-h2 {
+.F1-Wide{
+  font-family: 'F1-Wide';
+}
+
+h1, h2{
+  font-family: 'F1-Bold';
+}
+
+h3 {
   font-family: 'F1';
 }
 
