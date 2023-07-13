@@ -57,23 +57,20 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
 
         <div className='flex justify-between border-b-[1px] text-3xl font-bold py-3'>
           <p className='F1-Bold text-5xl'>{position}</p>
-
           <div className='ml-auto F1'>
             <p className='text-xl'>{points}</p>
             <p className='text-white bg-black text-sm text-center '>PTS</p>
-          </div>
+          </div>          
         </div>
         
         <div className='border-b-[1px]  py-3 flex'>
-
           <div className='mr-auto'>
             <h3 className='text-base'>{Driver.givenName}</h3>
             <h2 className='text-2xl'>{Driver.familyName}</h2>        
           </div>
-
           <div className='ml-auto self-center'>
-                {flagImage && <img className='flag' src={flagImage} alt="Flag"/>}
-              </div>
+            {flagImage && <img className='flag' src={flagImage} alt="Flag"/>}
+          </div>
         </div>
 
         <div className='py-3'>
