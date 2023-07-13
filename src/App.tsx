@@ -41,7 +41,11 @@ const App: React.FC = () => {
   return (
     <div className='container mx-auto'>
       <div className="driver-card-wrapper">
-        <h1 className="font-bold text-3xl mb-4">F1 {currentYear} Drivers</h1>
+        <h1 className="font-bold text-6xl mt-7 py-7 heading">F1 {currentYear} Drivers</h1>
+        <div className='bg-gray-100 rounded-lg my-5 p-4 Titillium'>
+          <p>Check out this season's official F1 line-up. Full breakdown of drivers, points and current positions.</p>
+          <p>Follow your favourite F1 drivers on and off the track.</p>
+        </div>
         {renderCards()}
       </div>
     </div>

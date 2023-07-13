@@ -5,7 +5,7 @@
 
 .driver-card{
     border-top: 3px solid black;
-    border-top-right-radius: 10px;
+    border-top-right-radius: 15px;
     border-right: 3px solid black;
     margin: 20px 20px 20px 0px;
     padding: 0 10px 0 10px;
@@ -14,4 +14,6 @@
 
 .driver-card-wrapper{
     padding: 0 20px 0 20px;
+    margin-top: 1.75rem;
 }
+

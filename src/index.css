@@ -33,6 +33,11 @@
   src: url(./assets/fonts/Formula1-Wide.ttf);
 }
 
+@font-face {
+  font-family: Titillium;
+  src: url(./assets/fonts/TitilliumWeb.ttf);
+}
+
 .F1{
   font-family: 'F1';
 }
@@ -43,6 +48,10 @@
 
 .F1-Wide{
   font-family: 'F1-Wide';
+}
+
+.Titillium{
+  font-family: 'Titillium';
 }
 
 h1, h2{
@@ -65,4 +74,10 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.heading{
+  border-top: 8px solid black;
+  border-top-right-radius: 15px;
+  border-right: 8px solid black;
 }

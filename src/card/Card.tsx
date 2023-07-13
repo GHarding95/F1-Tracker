@@ -55,7 +55,7 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
     <>
       <div className='driver-card'>
 
-        <div className='flex justify-between border-b-[1px] text-3xl font-bold py-1'>
+        <div className='flex justify-between border-b-[1px] text-3xl font-bold py-3'>
           <p className='F1-Bold text-5xl'>{position}</p>
 
           <div className='ml-auto F1'>
@@ -64,7 +64,7 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
           </div>
         </div>
         
-        <div className='border-b-[1px] py-1 flex'>
+        <div className='border-b-[1px]  py-3 flex'>
 
           <div className='mr-auto'>
             <h3 className='text-base'>{Driver.givenName}</h3>
@@ -76,9 +76,11 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
               </div>
         </div>
 
-        <p>{Constructors[0].name}</p>
-        <p className='text-3xl'>{permanentNumber}</p>
-        
+        <div className='py-3'>
+          <p className='F1 text-gray-500'>{Constructors[0].name}</p>
+          <p className='text-3xl'>{permanentNumber}</p>
+        </div>
+
       </div>
     </>
   );
