@@ -1,8 +1,8 @@
-## F1-Tracker
+# F1-Tracker
 
 Single page application for tracking current F1 Driver Standings using the Ergast F1 API: http://ergast.com/api/f1/current/driverstandings.json
  
-# Tech Stack
+## Tech Stack
 
 - VS Code
 - React JS
@@ -10,10 +10,10 @@ Single page application for tracking current F1 Driver Standings using the Ergas
 - Tailwind CSS
 - React-Router-DOM
 
-# Getting Started
+## Getting Started
 
 npm install
 
-# To Run
+## To Run
 
 npm start
