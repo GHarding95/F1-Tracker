@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from './card/Card';
 import useDriverStandings from './hooks/useDriverStandings';
 
@@ -9,6 +9,13 @@ const getCurrentYear = (): number => {
 const App: React.FC = () => {
   const driverStandings = useDriverStandings();
   const currentYear = getCurrentYear();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (driverStandings.length > 0) {
+      setIsLoading(false); // Data has loaded
+    }
+  }, [driverStandings]);
 
   const renderCards = () => {
     const rows: JSX.Element[] = [];
@@ -46,7 +53,12 @@ const App: React.FC = () => {
           <p>Check out this season's official F1 line-up. Full breakdown of drivers, points and current positions.</p>
           <p>Follow your favourite F1 drivers on and off the track.</p>
         </div>
-        {renderCards()}
+        {isLoading ? (
+          <h1>Loading...</h1>
+        ) : (
+          renderCards()
+        )}
+        
       </div>
     </div>
   );
