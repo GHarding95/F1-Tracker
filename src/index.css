@@ -81,3 +81,7 @@ code {
   border-top-right-radius: 15px;
   border-right: 8px solid black;
 }
+
+.f1-red{
+ color: rgb(225, 6, 0);
+}

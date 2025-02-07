@@ -2,20 +2,27 @@ import React, { useState, useEffect } from 'react';
 import Card from './card/Card';
 import useDriverStandings from './hooks/useDriverStandings';
 
-const getCurrentYear = (): number => {
-  return new Date().getFullYear();
-};
-
 const App: React.FC = () => {
   const driverStandings = useDriverStandings();
-  const currentYear = getCurrentYear();
+  const currentYear = new Date().getFullYear();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (driverStandings.length > 0) {
-      setIsLoading(false); // Data has loaded
+      setIsLoading(false);
+    } else {
+      const timeout = setTimeout(() => {
+        setIsLoading(false);
+      }, 5000);
+
+      return () => clearTimeout(timeout);
     }
   }, [driverStandings]);
+
+  const isOffSeason = (): boolean => {
+    const month = new Date().getMonth() + 1;
+    return month === 1 || month === 2; // January & February are off-season
+  };
 
   const renderCards = () => {
     const rows: JSX.Element[] = [];
@@ -32,7 +39,7 @@ const App: React.FC = () => {
         <div className="flex justify-evenly mb-4" key={i}>
           {rowDrivers.map((standing, index) => (
             <Card
-              key={index}
+              key={standing.Driver.driverId}
               driverStanding={standing}
               isFirstDriver={index === 0 && i === 0}
               position={start + index + 1}
@@ -48,17 +55,23 @@ const App: React.FC = () => {
   return (
     <div className='container mx-auto'>
       <div className="driver-card-wrapper">
-        <h1 className="font-bold text-6xl mt-7 py-7 heading">F1 {currentYear} Drivers</h1>
+        <h1 className="font-bold text-6xl mt-7 py-7 heading">
+          F1 {currentYear} Drivers
+        </h1>
+
+        {/* Display a subtitle only in the off-season */}
+        {isOffSeason() && (
+          <h2 className="f1-red text-xl font-semibold">
+            Displaying last season's final standings (New season starts in March)
+          </h2>
+        )}
+
         <div className='bg-gray-100 rounded-lg my-5 p-4 Titillium'>
-          <p>Check out this season's official F1 line-up. Full breakdown of drivers, points and current positions.</p>
+          <p>Check out this season's official F1 line-up. Full breakdown of drivers, points, and current positions.</p>
           <p>Follow your favourite F1 drivers on and off the track.</p>
         </div>
-        {isLoading ? (
-          <h1>Loading...</h1>
-        ) : (
-          renderCards()
-        )}
-        
+
+        {isLoading ? <h1>Loading...</h1> : renderCards()}
       </div>
     </div>
   );
