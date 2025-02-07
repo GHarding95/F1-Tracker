@@ -3,18 +3,17 @@ import Card from './card/Card';
 import useDriverStandings from './hooks/useDriverStandings';
 
 const App: React.FC = () => {
-  const [driverStandings, loading, error] = useDriverStandings();  // Get loading and error from hook
-  const [isLoading, setIsLoading] = useState(true);  // General loading state for the page
+  const [driverStandings, loading, error] = useDriverStandings(); 
+  const [isLoading, setIsLoading] = useState(true);
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
-    // Update isLoading based on the fetched driverStandings data or network issues
     if (driverStandings.length > 0 || loading) {
       setIsLoading(false);
     } else {
       const timeout = setTimeout(() => {
         setIsLoading(false);
-      }, 5000);  // Wait for 5 seconds before hiding the loading screen
+      }, 5000);
 
       return () => clearTimeout(timeout);
     }
@@ -72,13 +71,13 @@ const App: React.FC = () => {
           <p>Follow your favourite F1 drivers on and off the track.</p>
         </div>
 
-        {/* Show a general loading screen while waiting for the page to load */}
+        {/* Show loading, error, or cards */}
         {isLoading ? (
-          <h1>Loading...</h1>  // Show loading if the page or API takes too long to load
+          <h1>Loading...</h1>
         ) : error ? (
-          <h1>Error: {error}</h1>  // Show error if data fetching failed
+          <h1>{error}</h1>  
         ) : (
-          renderCards()
+          renderCards()  
         )}
       </div>
     </div>
