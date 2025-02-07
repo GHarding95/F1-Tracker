@@ -10,7 +10,15 @@
     margin: 20px 20px 20px 0px;
     padding: 0 10px 0 10px;
     width: 100%;
+    transition: transform 0.3s ease-in-out;
 }
+
+.driver-card:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+    transition: transform 0.3s ease-in-out;
+}
+
 
 .driver-card-wrapper{
     padding: 0 20px 0 20px;
