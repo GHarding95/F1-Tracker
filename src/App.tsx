@@ -8,16 +8,8 @@ const App: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
-    if (driverStandings.length > 0 || loading) {
-      setIsLoading(false);
-    } else {
-      const timeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 5000);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [driverStandings, loading]);
+    setIsLoading(loading);
+  }, [loading]);
 
   const isOffSeason = (): boolean => {
     const month = new Date().getMonth() + 1;
