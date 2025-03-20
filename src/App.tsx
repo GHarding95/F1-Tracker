@@ -5,16 +5,11 @@ import useDriverStandings from './hooks/useDriverStandings';
 const App: React.FC = () => {
   const [driverStandings, loading, error] = useDriverStandings(); 
   const [isLoading, setIsLoading] = useState(true);
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2025;
 
   useEffect(() => {
     setIsLoading(loading);
   }, [loading]);
-
-  const isOffSeason = (): boolean => {
-    const month = new Date().getMonth() + 1;
-    return month === 1 || month === 2; // January & February are off-season
-  };
 
   const renderCards = () => {
     const rows: JSX.Element[] = [];
@@ -51,12 +46,9 @@ const App: React.FC = () => {
           F1 {currentYear} Drivers
         </h1>
 
-        {/* Display a subtitle only in the off-season */}
-        {isOffSeason() && (
-          <h2 className="f1-red text-xl font-semibold">
-            Displaying last season's final standings (New season starts in March)
-          </h2>
-        )}
+        <h2 className="f1-red text-xl font-semibold mb-4">
+          Note: Currently displaying 2024 standings as {currentYear} data is not yet available through the API
+        </h2>
 
         <div className='bg-gray-100 rounded-lg my-5 p-4 Titillium'>
           <p>Check out this season's official F1 line-up. Full breakdown of drivers, points, and current positions.</p>
