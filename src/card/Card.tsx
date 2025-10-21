@@ -25,12 +25,12 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
           </div>          
         </div>
         
-        <div className='border-b-[1px]  py-3 flex'>
-          <div className='mr-auto'>
-            <h3 className='text-base'>{Driver.givenName}</h3>
-            <h2 className='text-2xl'>{Driver.familyName}</h2>        
+        <div className='border-b-[1px] py-3 flex items-center justify-between'>
+          <div className='flex-1 min-w-0'>
+            <h3 className='text-base truncate'>{Driver.givenName}</h3>
+            <h2 className='text-2xl truncate'>{Driver.familyName}</h2>        
           </div>
-          <div className='ml-auto self-center'>
+          <div className='flex-shrink-0 ml-2'>
             {Driver.flag && <img className='flag' src={Driver.flag} alt={`${Driver.nationality} flag`}/>}
           </div>
         </div>

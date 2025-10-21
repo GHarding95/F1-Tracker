@@ -6,37 +6,60 @@ const App: React.FC = () => {
   const [driverStandings, loading, error] = useDriverStandings();
 
   const renderCards = () => {
-    const rows: JSX.Element[] = [];
-    const numDrivers = driverStandings.length;
-    const numColumns = 4;
-    const numRows = Math.ceil(numDrivers / numColumns);
-
-    for (let i = 0; i < numRows; i++) {
-      const start = i === 0 ? 0 : (i - 1) * numColumns + 3;
-      const end = i === 0 ? 3 : i * numColumns + 3;
-      const rowDrivers = driverStandings.slice(start, end);
-
-      rows.push(
-        <div className="flex justify-evenly mb-4" key={i}>
-          {rowDrivers.map((standing, index) => (
-            <Card
-              key={standing.Driver.driverId}
-              driverStanding={standing}
-              isFirstDriver={index === 0 && i === 0}
-              position={start + index + 1}
-            />
-          ))}
+    return (
+      <>
+        {/* Responsive grid for screens below 1100px */}
+        <div className="block xl:hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {driverStandings.map((standing, index) => (
+              <Card
+                key={standing.Driver.driverId}
+                driverStanding={standing}
+                isFirstDriver={index === 0}
+                position={index + 1}
+              />
+            ))}
+          </div>
         </div>
-      );
-    }
 
-    return rows;
+        {/* Original layout for screens 1100px and above */}
+        <div className="hidden xl:block">
+          {(() => {
+            const rows: JSX.Element[] = [];
+            const numDrivers = driverStandings.length;
+            const numColumns = 4;
+            const numRows = Math.ceil(numDrivers / numColumns);
+
+            for (let i = 0; i < numRows; i++) {
+              const start = i === 0 ? 0 : (i - 1) * numColumns + 3;
+              const end = i === 0 ? 3 : i * numColumns + 3;
+              const rowDrivers = driverStandings.slice(start, end);
+
+              rows.push(
+                <div className="flex justify-evenly mb-4" key={i}>
+                  {rowDrivers.map((standing, index) => (
+                    <Card
+                      key={standing.Driver.driverId}
+                      driverStanding={standing}
+                      isFirstDriver={index === 0 && i === 0}
+                      position={start + index + 1}
+                    />
+                  ))}
+                </div>
+              );
+            }
+
+            return rows;
+          })()}
+        </div>
+      </>
+    );
   };
 
   return (
     <div className='container mx-auto'>
       <div className="driver-card-wrapper">
-        <h1 className="font-bold text-6xl mt-7 py-7 heading">
+        <h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl mt-7 py-7 heading">
           F1 {new Date().getFullYear()} Drivers Standings
         </h1>
 
