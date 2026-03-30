@@ -1,6 +1,6 @@
 # F1 Tracker
 
-A simple React application that displays current F1 driver standings using the [F1 API](https://f1api.dev/).
+A React web application that displays current F1 driver standings using the [F1 API](https://f1api.dev/).
 
 ## Features
 
