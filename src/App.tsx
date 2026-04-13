@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Card from './card/Card';
+import LandingSplash from './components/LandingSplash';
 import useDriverStandings from './hooks/useDriverStandings';
+
+const MIN_SPLASH_MS = 1650;
 
 const App: React.FC = () => {
   const [driverStandings, loading, error] = useDriverStandings();
+  const [splashActive, setSplashActive] = useState(true);
+  const [splashMounted, setSplashMounted] = useState(true);
+  const mountTimeRef = useRef(Date.now());
+
+  useEffect(() => {
+    if (loading) return;
+    const elapsed = Date.now() - mountTimeRef.current;
+    const wait = Math.max(0, MIN_SPLASH_MS - elapsed);
+    const t = window.setTimeout(() => setSplashActive(false), wait);
+    return () => window.clearTimeout(t);
+  }, [loading]);
 
   const renderCards = () => {
     return (
@@ -55,43 +69,53 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className='container mx-auto'>
-      <div className="driver-card-wrapper">
-        <h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl mt-7 py-7 heading">
-          F1 {new Date().getFullYear()} Drivers Standings
-        </h1>
+    <div className="app-shell">
+      <div className="app-shell__noise" aria-hidden />
+      {splashMounted && (
+        <LandingSplash
+          active={splashActive}
+          onExited={() => setSplashMounted(false)}
+        />
+      )}
+      <div className="app-shell__content container mx-auto">
+        <div className="driver-card-wrapper">
+          <h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl mt-7 py-7 heading pl-0 pr-4 sm:pr-6">
+            F1 {new Date().getFullYear()} Drivers Standings
+          </h1>
 
-        <h2 className="f1-red text-xl font-semibold mb-4">
-          Current season championship points
-        </h2>
+          <h2 className="f1-red text-xl font-semibold mb-4 px-1">
+            Current season championship points
+          </h2>
 
-        <div className='bg-gray-100 rounded-lg my-5 p-4 Titillium'>
-          <p>Check out this season's official F1 line-up. Full breakdown of drivers, points, and current positions.</p>
-        </div>
-
-        {/* Show loading, error, or cards */}
-        {loading ? (
-          <div className="text-center py-8">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
-            <p className="mt-4 text-sm text-gray-600">Loading current championship standings...</p>
-            <p className="text-xs text-gray-500 mt-1">Fetching official F1 data.</p>
+          <div className="rounded-lg my-5 p-4 sm:p-5 Titillium intro-panel">
+            <p>Check out this season's official F1 line-up. Full breakdown of drivers, points, and current positions.</p>
           </div>
-        ) : error ? (
-          <div className="text-center py-8">
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg max-w-md mx-auto">
-              <h2 className="font-bold text-lg mb-2">Unable to Load F1 Data</h2>
-              <p className="text-sm">{error}</p>
-              <button 
-                onClick={() => window.location.reload()} 
-                className="mt-3 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-              >
-                Try Again
-              </button>
+
+          {/* Show loading, error, or cards */}
+          {loading ? (
+            <div className="text-center py-12 loading-panel">
+              <div className="inline-block animate-spin rounded-full h-10 w-10 border-2 spinner-f1" />
+              <p className="mt-5 text-sm">Loading current championship standings...</p>
+              <p className="text-xs mt-2 opacity-80">Fetching official F1 data.</p>
             </div>
-          </div>
-        ) : (
-          renderCards()  
-        )}
+          ) : error ? (
+            <div className="text-center py-10">
+              <div className="error-panel px-5 py-5 rounded-xl max-w-md mx-auto text-left sm:text-center">
+                <h2 className="font-bold text-lg mb-2">Unable to Load F1 Data</h2>
+                <p className="text-sm opacity-95">{error}</p>
+                <button
+                  type="button"
+                  onClick={() => window.location.reload()}
+                  className="mt-4 btn-retry"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          ) : (
+            renderCards()
+          )}
+        </div>
       </div>
     </div>
   );

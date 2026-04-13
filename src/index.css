@@ -11,7 +11,7 @@
     @apply text-xl;
   }
   a {
-    @apply text-blue-600 underline;
+    @apply text-red-400/90 underline decoration-red-500/40 underline-offset-2 transition-colors hover:text-red-300;
   }
 }
 
@@ -38,50 +38,216 @@
   src: url(./assets/fonts/TitilliumWeb.ttf);
 }
 
-.F1{
-  font-family: 'F1';
+:root {
+  --f1-bg-deep: #050506;
+  --f1-bg-mid: #0c0c10;
+  --f1-red: #e10600;
+  --f1-red-soft: rgba(225, 6, 0, 0.12);
+  --f1-white: #f4f4f5;
+  --f1-muted: #9ca3af;
+  --f1-border: rgba(255, 255, 255, 0.08);
+  --f1-glow: rgba(225, 6, 0, 0.35);
 }
 
-.F1-Bold{
-  font-family: 'F1-Bold';
+.F1 {
+  font-family: 'F1', system-ui, sans-serif;
 }
 
-.F1-Wide{
-  font-family: 'F1-Wide';
+.F1-Bold {
+  font-family: 'F1-Bold', system-ui, sans-serif;
 }
 
-.Titillium{
-  font-family: 'Titillium';
+.F1-Wide {
+  font-family: 'F1-Wide', system-ui, sans-serif;
 }
 
-h1, h2{
-  font-family: 'F1-Bold';
+.Titillium {
+  font-family: 'Titillium', system-ui, sans-serif;
+}
+
+h1,
+h2 {
+  font-family: 'F1-Bold', system-ui, sans-serif;
+  color: var(--f1-white);
+  letter-spacing: -0.02em;
 }
 
 h3 {
-  font-family: 'F1';
+  font-family: 'F1', system-ui, sans-serif;
+  color: var(--f1-white);
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  min-height: 100vh;
+  font-family:
+    'Titillium',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--f1-white);
+  background-color: var(--f1-bg-deep);
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -20%, rgba(225, 6, 0, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(225, 6, 0, 0.06) 0%, transparent 45%),
+    linear-gradient(180deg, #030304 0%, #08080c 35%, #050506 100%);
+  background-attachment: fixed;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-.heading{
-  border-top: 8px solid black;
-  border-top-right-radius: 15px;
-  border-right: 8px solid black;
+.heading {
+  position: relative;
+  margin-left: 0;
+  margin-right: 0;
+  padding-bottom: 0.5rem;
+  border: none;
+  border-top: none;
+  border-right: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%);
+  border-radius: 0 1.25rem 0 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 48px rgba(0, 0, 0, 0.35);
 }
 
-.f1-red{
- color: rgb(225, 6, 0);
+.heading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  border-radius: 0 1rem 0 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 55%),
+    linear-gradient(
+      90deg,
+      #b50500 0%,
+      #e10600 22%,
+      #ff4a3a 50%,
+      #e10600 78%,
+      rgba(225, 6, 0, 0.55) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 14px rgba(225, 6, 0, 0.28);
+}
+
+.heading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  bottom: 0;
+  border-radius: 0 1rem 0 0;
+  background: linear-gradient(
+    180deg,
+    #ff4a3a 0%,
+    var(--f1-red) 18%,
+    rgba(225, 6, 0, 0.35) 55%,
+    rgba(225, 6, 0, 0.06) 85%,
+    transparent 100%
+  );
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.12);
+}
+
+.f1-red {
+  color: var(--f1-red);
+  text-shadow: 0 0 32px var(--f1-glow);
+}
+
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.app-shell__noise {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.app-shell__content {
+  position: relative;
+  z-index: 1;
+}
+
+.intro-panel {
+  border: 1px solid var(--f1-border);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  color: rgba(244, 244, 245, 0.92);
+  line-height: 1.6;
+}
+
+.loading-panel {
+  color: var(--f1-muted);
+}
+
+.loading-panel strong {
+  color: var(--f1-white);
+}
+
+.error-panel {
+  border: 1px solid rgba(225, 6, 0, 0.35);
+  background: linear-gradient(145deg, rgba(225, 6, 0, 0.12) 0%, rgba(10, 10, 14, 0.95) 100%);
+  color: rgba(254, 226, 226, 0.95);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.error-panel h2 {
+  color: #fff;
+}
+
+.btn-retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(225, 6, 0, 0.5);
+  background: linear-gradient(180deg, #e10600 0%, #b50500 100%);
+  color: #fff;
+  font-family: 'F1', system-ui, sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px rgba(225, 6, 0, 0.35);
+}
+
+.btn-retry:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(225, 6, 0, 0.45);
+}
+
+.btn-retry:active {
+  transform: translateY(0);
+}
+
+.spinner-f1 {
+  border-color: rgba(255, 255, 255, 0.15);
+  border-top-color: var(--f1-red);
+  box-shadow: 0 0 20px var(--f1-glow);
 }
