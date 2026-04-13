@@ -1,6 +1,6 @@
 # F1 Tracker
 
-F1 Driver Standings tracker created with React JS & Typescript using the [F1 API](https://f1api.dev/), it's slow but it's free!
+This is a mobile responsive F1 Tracker web app created with React JS & Typescript using a free API (https://f1api.dev/), shows current driver standings for the season and Race Results per driver.
 
 ## Features
 
