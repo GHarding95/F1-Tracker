@@ -15,7 +15,6 @@ const App: React.FC = () => {
               <Card
                 key={standing.Driver.driverId}
                 driverStanding={standing}
-                isFirstDriver={index === 0}
                 position={index + 1}
               />
             ))}
@@ -41,7 +40,6 @@ const App: React.FC = () => {
                     <Card
                       key={standing.Driver.driverId}
                       driverStanding={standing}
-                      isFirstDriver={index === 0 && i === 0}
                       position={start + index + 1}
                     />
                   ))}
@@ -66,13 +64,6 @@ const App: React.FC = () => {
         <h2 className="f1-red text-xl font-semibold mb-4">
           Current season championship points
         </h2>
-        
-        {loading && (
-          <div className="text-center py-4">
-            <p className="text-sm text-gray-600">Loading current championship standings...</p>
-            <p className="text-xs text-gray-500 mt-1">Fetching official F1 data.</p>
-          </div>
-        )}
 
         <div className='bg-gray-100 rounded-lg my-5 p-4 Titillium'>
           <p>Check out this season's official F1 line-up. Full breakdown of drivers, points, and current positions.</p>
@@ -82,7 +73,8 @@ const App: React.FC = () => {
         {loading ? (
           <div className="text-center py-8">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
-            <p className="mt-4 text-lg">Loading F1 data...</p>
+            <p className="mt-4 text-sm text-gray-600">Loading current championship standings...</p>
+            <p className="text-xs text-gray-500 mt-1">Fetching official F1 data.</p>
           </div>
         ) : error ? (
           <div className="text-center py-8">

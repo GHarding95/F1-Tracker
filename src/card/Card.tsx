@@ -4,14 +4,11 @@ import { DriverStanding } from './types';
 
 type CardProps = {
   driverStanding: DriverStanding;
-  isFirstDriver: boolean;
   position: number;
 };
 
-const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  }) => {
+const Card: React.FC<CardProps> = ({ driverStanding, position }) => {
   const { Driver, Constructors, points } = driverStanding;
-  const permanentNumber = isFirstDriver ? '1' : Driver.permanentNumber;
-  
 
   return (
     <>
@@ -37,7 +34,7 @@ const Card: React.FC<CardProps> = ({ driverStanding, isFirstDriver, position  })
 
         <div className='py-3'>
           <p className='F1 text-gray-500'>{Constructors[0].name}</p>
-          <p className='text-3xl'>{permanentNumber}</p>
+          <p className='text-3xl'>{Driver.permanentNumber}</p>
         </div>
 
       </div>
