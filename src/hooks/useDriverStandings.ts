@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
+import { F1_API_BASE, f1FetchJson } from '../api/f1Client';
 import { DriverStanding } from '../card/types';
 import { getFlagForNationality } from '../utils/nationalityFlag';
-
-// F1 API - Direct championship standings endpoint
-const F1_API_BASE_URL = 'https://f1api.dev/api';
-
-// API URLs
-const getChampionshipStandingsUrl = () => `${F1_API_BASE_URL}/current/drivers-championship`;
 
 const useDriverStandings = (): [DriverStanding[], boolean, string | null] => {
   const [driverStandings, setDriverStandings] = useState<DriverStanding[]>([]);
@@ -16,22 +11,13 @@ const useDriverStandings = (): [DriverStanding[], boolean, string | null] => {
   useEffect(() => {
     const fetchData = async (): Promise<void> => {
       try {
-        console.log('Fetching championship standings from F1 API...');
-        
-        // Simple API call to get championship standings
-        const response = await fetch(getChampionshipStandingsUrl());
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch championship standings: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
+        const data = await f1FetchJson<{ drivers_championship?: unknown[] }>(
+          `${F1_API_BASE}/current/drivers-championship`
+        );
+
         if (!data || !data.drivers_championship || data.drivers_championship.length === 0) {
           throw new Error('No championship data available');
         }
-        
-        console.log(`Found ${data.drivers_championship.length} drivers in championship standings`);
         
         // Convert F1 API format to our format
         const convertedStandings = data.drivers_championship.map((driver: any) => ({
@@ -58,7 +44,6 @@ const useDriverStandings = (): [DriverStanding[], boolean, string | null] => {
           }]
         }));
 
-        console.log('Converted', convertedStandings.length, 'championship standings');
         setDriverStandings(convertedStandings);
         setLoading(false);
         

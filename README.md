@@ -4,10 +4,9 @@ F1 Driver Standings tracker created with React JS & Typescript using the [F1 API
 
 ## Features
 
-- 🏎️ **Real-time F1 Data**: Shows latest session results from OpenF1 API
+- 🏎️ **Real-time F1 Data**: Shows latest session results from the F1 API
 - 📊 **Driver Standings**: Displays driver positions, points, and team information
 - 🎨 **Modern UI**: Clean, responsive design with F1-themed styling
-- ⚡ **Fast Loading**: Optimized API calls with parallel requests
 - 🔄 **Auto-updates**: Shows latest data after each F1 session
 
 ## Technology Stack

@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { F1_API_BASE, f1FetchJson } from '../api/f1Client';
 import { getFlagForNationality } from '../utils/nationalityFlag';
 
-const F1_API_BASE = 'https://f1api.dev/api';
+/** Parallel race fetches per wave (balance: latency vs. API / browser limits). */
+const RACE_FETCH_CONCURRENCY = 8;
 
 export type DriverSeasonRaceRow = {
   round: number;
@@ -55,19 +57,6 @@ function todayIso(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-async function mapInChunks<T, R>(
-  items: T[],
-  chunkSize: number,
-  fn: (item: T) => Promise<R>
-): Promise<R[]> {
-  const out: R[] = [];
-  for (let i = 0; i < items.length; i += chunkSize) {
-    const chunk = items.slice(i, i + chunkSize);
-    out.push(...(await Promise.all(chunk.map(fn))));
-  }
-  return out;
-}
-
 type RaceApiResult = {
   position?: string | number;
   points?: number;
@@ -83,6 +72,21 @@ type SprintApiRow = {
   driverId?: string;
   position?: number;
   points?: number;
+};
+
+type RaceResultPayload = {
+  races?: {
+    results?: RaceApiResult[];
+    circuit?: { country?: string } | Array<{ country?: string }>;
+    date?: string;
+  };
+};
+
+type SprintRacePayload = {
+  races?: {
+    sprintRaceResults?: SprintApiRow[];
+    sprint_race_results?: SprintApiRow[];
+  };
 };
 
 function normalizeCircuitFromRacePayload(
@@ -151,9 +155,12 @@ const useDriverSeasonResults = (
 
     const applyStandingsHeader = async (): Promise<void> => {
       try {
-        const res = await fetch(`${F1_API_BASE}/current/drivers-championship`);
-        if (!res.ok || cancelled) return;
-        const data = await res.json();
+        if (cancelled) return;
+        const data = await f1FetchJson<{
+          season?: number;
+          drivers_championship?: ChampionshipRow[];
+        }>(`${F1_API_BASE}/current/drivers-championship`);
+        if (cancelled) return;
         const list: ChampionshipRow[] = Array.isArray(data.drivers_championship)
           ? data.drivers_championship
           : [];
@@ -186,11 +193,9 @@ const useDriverSeasonResults = (
 
     const loadRaces = async (): Promise<void> => {
       try {
-        const calRes = await fetch(`${F1_API_BASE}/current`);
-        if (!calRes.ok) {
-          throw new Error(`Calendar request failed (${calRes.status})`);
-        }
-        const calJson = await calRes.json();
+        const calJson = await f1FetchJson<{ season?: number; races?: CalendarRace[] }>(
+          `${F1_API_BASE}/current`
+        );
         const season = Number(calJson.season);
         const races: CalendarRace[] = Array.isArray(calJson.races) ? calJson.races : [];
         const today = todayIso();
@@ -204,11 +209,14 @@ const useDriverSeasonResults = (
 
         const buildRow = async (calRace: CalendarRace): Promise<DriverSeasonRaceRow | null> => {
           const round = calRace.round;
-          const raceRes = await fetch(`${F1_API_BASE}/${season}/${round}/race`);
-          if (!raceRes.ok) {
+          let raceJson: RaceResultPayload;
+          try {
+            raceJson = await f1FetchJson<RaceResultPayload>(
+              `${F1_API_BASE}/${season}/${round}/race`
+            );
+          } catch {
             return null;
           }
-          const raceJson = await raceRes.json();
           const block = raceJson.races;
           if (!block?.results || !Array.isArray(block.results)) {
             return null;
@@ -241,9 +249,10 @@ const useDriverSeasonResults = (
 
           const sprintScheduled = Boolean(calRace.schedule?.sprintRace?.date);
           if (sprintScheduled) {
-            const sprintRes = await fetch(`${F1_API_BASE}/${season}/${round}/sprint/race`);
-            if (sprintRes.ok) {
-              const sprintJson = await sprintRes.json();
+            try {
+              const sprintJson = await f1FetchJson<SprintRacePayload>(
+                `${F1_API_BASE}/${season}/${round}/sprint/race`
+              );
               const list: SprintApiRow[] =
                 sprintJson.races?.sprintRaceResults ?? sprintJson.races?.sprint_race_results ?? [];
               const sp = list.find((s) => s.driverId === driverId);
@@ -251,6 +260,8 @@ const useDriverSeasonResults = (
                 sprintPosition = String(sp.position ?? '—');
                 sprintPoints = typeof sp.points === 'number' ? sp.points : Number(sp.points) || 0;
               }
+            } catch {
+              /* sprint optional */
             }
           }
 
@@ -276,8 +287,22 @@ const useDriverSeasonResults = (
           };
         };
 
-        const built = await mapInChunks(due, 4, buildRow);
-        const filtered = built.filter((r): r is DriverSeasonRaceRow => r != null);
+        const accumulated: DriverSeasonRaceRow[] = [];
+        for (let i = 0; i < due.length; i += RACE_FETCH_CONCURRENCY) {
+          if (cancelled) return;
+          const chunk = due.slice(i, i + RACE_FETCH_CONCURRENCY);
+          const results = await Promise.all(chunk.map(buildRow));
+          for (const r of results) {
+            if (r != null) accumulated.push(r);
+          }
+          accumulated.sort((a, b) => a.round - b.round);
+          if (!cancelled && accumulated.length > 0) {
+            setRows([...accumulated]);
+            setLoading(false);
+          }
+        }
+
+        const filtered = accumulated;
         const lastRow = filtered[filtered.length - 1];
         const nat = headerAcc.driverNationality;
 
@@ -293,7 +318,7 @@ const useDriverSeasonResults = (
             constructorTeamName:
               lastRow?.team && lastRow.team !== '—' ? lastRow.team : m.constructorTeamName,
           }));
-          setRows(filtered);
+          setRows([...filtered]);
           setLoading(false);
         }
       } catch (e: unknown) {
