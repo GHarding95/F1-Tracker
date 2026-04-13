@@ -1,4 +1,5 @@
 import React from 'react';
+import './constructor-logo.css';
 
 type ConstructorLogoProps = {
   constructorId: string;

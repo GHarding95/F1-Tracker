@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Card from './card/Card';
-import AppFooter from './AppFooter';
+import Footer from './components/Footer';
 import LandingSplash from './components/LandingSplash';
 import useDriverStandings from './hooks/useDriverStandings';
 
@@ -119,7 +119,7 @@ const App: React.FC = () => {
           )}
           </div>
         </div>
-        <AppFooter />
+        <Footer />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import ConstructorLogo from '../components/ConstructorLogo';
+import DriverFlag from '../components/DriverFlag';
 import '../card/card.css';
 import { DriverStanding } from './types';
 
@@ -28,9 +29,7 @@ const Card: React.FC<CardProps> = ({ driverStanding, position }) => {
             <h3 className='text-base truncate driver-card-name-sm'>{Driver.givenName}</h3>
             <h2 className='text-2xl truncate driver-card-name-lg'>{Driver.familyName}</h2>        
           </div>
-          <div className='flex-shrink-0 ml-2'>
-            {Driver.flag && <img className='flag' src={Driver.flag} alt={`${Driver.nationality} flag`}/>}
-          </div>
+          <DriverFlag flag={Driver.flag} nationality={Driver.nationality} />
         </div>
 
         <div className='py-3 flex items-center justify-between gap-3'>

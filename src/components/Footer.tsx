@@ -1,10 +1,11 @@
 import React from 'react';
+import './footer.css';
 
-type AppFooterProps = {
+type FooterProps = {
   variant?: 'default' | 'splash';
 };
 
-const AppFooter: React.FC<AppFooterProps> = ({ variant = 'default' }) => (
+const Footer: React.FC<FooterProps> = ({ variant = 'default' }) => (
   <footer
     className={
       variant === 'splash' ? 'app-footer app-footer--splash' : 'app-footer'
@@ -16,4 +17,4 @@ const AppFooter: React.FC<AppFooterProps> = ({ variant = 'default' }) => (
   </footer>
 );
 
-export default AppFooter;
+export default Footer;

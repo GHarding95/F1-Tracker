@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import AppFooter from '../AppFooter';
+import Footer from './Footer';
 import './landing-splash.css';
 
 type LandingSplashProps = {
@@ -41,7 +41,6 @@ const LandingSplash: React.FC<LandingSplashProps> = ({ active, onExited }) => {
             <span className="landing-splash__badge-one">1</span>
             <span className="landing-splash__badge-tracker"> Tracker</span>
           </div>
-          <div className="landing-splash__pulse" aria-hidden />
           <div className="landing-splash__rings" aria-hidden>
             <span className="landing-splash__ring" />
             <span className="landing-splash__ring landing-splash__ring--delay" />
@@ -49,7 +48,7 @@ const LandingSplash: React.FC<LandingSplashProps> = ({ active, onExited }) => {
         </div>
       </div>
 
-      <AppFooter variant="splash" />
+      <Footer variant="splash" />
     </div>
   );
 };

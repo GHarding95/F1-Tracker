@@ -103,29 +103,6 @@
   }
 }
 
-.landing-splash__pulse {
-  position: absolute;
-  width: min(70vw, 420px);
-  height: min(70vw, 420px);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(225, 6, 0, 0.2) 0%, transparent 65%);
-  animation: landing-pulse 2.8s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes landing-pulse {
-  0%,
-  100% {
-    transform: scale(0.92);
-    opacity: 0.6;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 .landing-splash__rings {
   position: absolute;
   inset: 0;
@@ -163,7 +140,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .landing-splash__badge-one,
-  .landing-splash__pulse,
   .landing-splash__ring {
     animation: none !important;
   }
