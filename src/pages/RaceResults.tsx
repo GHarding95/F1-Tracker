@@ -76,7 +76,7 @@ const RaceResults: React.FC = () => {
           </Link>
         </nav>
 
-        <div className="mt-2 py-4 pl-0 pr-4 sm:pr-6 heading flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <div className="mt-2 py-4 pl-0 pr-4 sm:pr-6 heading heading--no-shadow flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <h1 className="font-bold text-3xl sm:text-4xl lg:text-5xl F1-Bold flex-1 min-w-0">
             {driverTitle}
           </h1>

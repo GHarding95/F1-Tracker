@@ -162,6 +162,16 @@ code {
   box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.12);
 }
 
+.heading--no-shadow {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.heading--no-shadow::before {
+  box-shadow: none;
+}
+
 .f1-red {
   color: var(--f1-red);
   text-shadow: 0 0 32px var(--f1-glow);

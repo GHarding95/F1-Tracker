@@ -24,29 +24,12 @@ This project uses the [F1 API](https://f1api.dev/) which provides:
 - Free to use
 - Official F1 data
 
-### Endpoints Used
-- `https://f1api.dev/api/current/drivers-championship` - Current season championship standings
-
 ## Getting Started
 
 1. Clone the repository
 2. Install dependencies: `npm install`
 3. Start the development server: `npm start`
 4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser
-
-## Project Structure
-
-```
-src/
-├── hooks/
-│   └── useDriverStandings.ts    # Custom hook for F1 data
-├── card/
-│   ├── Card.tsx                 # Driver card component
-│   ├── card.css                 # Card styles
-│   └── types.ts                 # TypeScript types
-├── App.tsx                      # Main application component
-└── index.tsx                    # Application entry point
-```
 
 ## How It Works
 

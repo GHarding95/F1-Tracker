@@ -12,7 +12,10 @@ const Footer: React.FC<FooterProps> = ({ variant = 'default' }) => (
     }
   >
     <p className="app-footer__text Titillium">
-      © {new Date().getFullYear()} Glen Harding
+      <span className="app-footer__copy">©</span>
+      <span className="app-footer__line">
+        {new Date().getFullYear()} Glen Harding
+      </span>
     </p>
   </footer>
 );

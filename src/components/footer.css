@@ -1,5 +1,8 @@
 /* Chequered flag pattern only on the footer band — full viewport width */
 .app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: none;
   margin-top: auto;
@@ -42,10 +45,27 @@
 .app-footer__text {
   position: relative;
   z-index: 1;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
   margin: 0;
   text-align: center;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
+  line-height: 1.35;
   letter-spacing: 0.04em;
   color: rgba(230, 230, 235, 0.95);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.app-footer__copy {
+  flex-shrink: 0;
+  font-size: 1.2em;
+  line-height: 1.35;
+}
+
+.app-footer__line {
+  line-height: 1.35;
+  padding-bottom: 2px;
 }
