@@ -144,3 +144,10 @@
   padding: 0 10px 3rem;
   margin-top: 1.75rem;
 }
+
+/* Link wraps the card for routing; contents keeps the card as the grid/flex item (original layout). */
+.driver-card-link {
+  display: contents;
+  text-decoration: none;
+  color: inherit;
+}

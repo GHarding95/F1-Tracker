@@ -4,6 +4,22 @@ import DriverFlag from '../components/DriverFlag';
 import '../card/card.css';
 import { DriverStanding } from './types';
 
+function formatOrdinal(n: number): string {
+  const k = Math.abs(Math.trunc(n));
+  const j = k % 100;
+  if (j >= 11 && j <= 13) return `${k}th`;
+  switch (k % 10) {
+    case 1:
+      return `${k}st`;
+    case 2:
+      return `${k}nd`;
+    case 3:
+      return `${k}rd`;
+    default:
+      return `${k}th`;
+  }
+}
+
 type CardProps = {
   driverStanding: DriverStanding;
   position: number;
@@ -17,7 +33,7 @@ const Card: React.FC<CardProps> = ({ driverStanding, position }) => {
       <div className='driver-card'>
 
         <div className='flex justify-between driver-card-row-top text-3xl font-bold py-3'>
-          <p className='F1-Bold text-5xl driver-card-pos'>{position}</p>
+          <p className='F1-Bold text-[2.75rem] leading-none driver-card-pos'>{formatOrdinal(position)}</p>
           <div className='ml-auto F1 driver-card-pts-wrap'>
             <p className='text-xl text-center driver-card-pts-value'>{points}</p>
             <p className='text-sm text-center driver-card-pts-label py-0.5 px-1'>PTS</p>
