@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Card from './card/Card';
+import AppFooter from './AppFooter';
 import LandingSplash from './components/LandingSplash';
 import useDriverStandings from './hooks/useDriverStandings';
 
@@ -69,7 +70,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-shell">
+    <div className="app-shell app-shell--layout">
       <div className="app-shell__noise" aria-hidden />
       {splashMounted && (
         <LandingSplash
@@ -77,8 +78,9 @@ const App: React.FC = () => {
           onExited={() => setSplashMounted(false)}
         />
       )}
-      <div className="app-shell__content container mx-auto">
-        <div className="driver-card-wrapper">
+      <div className="app-shell__content flex flex-col flex-1 w-full min-w-0">
+        <div className="container mx-auto flex-1">
+          <div className="driver-card-wrapper flex-1">
           <h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl mt-7 py-7 heading pl-0 pr-4 sm:pr-6">
             F1 {new Date().getFullYear()} Drivers Standings
           </h1>
@@ -115,7 +117,9 @@ const App: React.FC = () => {
           ) : (
             renderCards()
           )}
+          </div>
         </div>
+        <AppFooter />
       </div>
     </div>
   );

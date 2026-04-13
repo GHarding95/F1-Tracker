@@ -4,8 +4,8 @@
   z-index: 100;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
   background: radial-gradient(
       ellipse 120% 80% at 50% 0%,
       rgba(225, 6, 0, 0.22) 0%,
@@ -30,26 +30,6 @@
   pointer-events: none;
 }
 
-.landing-splash__aurora {
-  position: absolute;
-  inset: -20%;
-  background: conic-gradient(
-    from 200deg at 50% 50%,
-    transparent 0deg,
-    rgba(225, 6, 0, 0.06) 60deg,
-    transparent 120deg,
-    rgba(255, 255, 255, 0.03) 200deg,
-    transparent 280deg
-  );
-  animation: landing-aurora-spin 14s linear infinite;
-}
-
-@keyframes landing-aurora-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .landing-splash__scanlines {
   position: absolute;
   inset: 0;
@@ -64,135 +44,18 @@
   pointer-events: none;
 }
 
-.landing-splash__speed {
-  position: absolute;
-  inset: 0;
-  perspective: 600px;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.landing-splash__speed-layer {
-  position: absolute;
-  left: -50%;
-  width: 200%;
-  height: 120%;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent 0,
-    transparent 48px,
-    rgba(225, 6, 0, 0.04) 48px,
-    rgba(225, 6, 0, 0.04) 50px
-  );
-  transform: rotateX(62deg) translateZ(-80px);
-  transform-origin: center top;
-  animation: landing-speed-a 2.8s linear infinite;
-}
-
-.landing-splash__speed-layer--b {
-  top: 35%;
-  opacity: 0.5;
-  animation-duration: 4.2s;
-  animation-direction: reverse;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent 0,
-    transparent 72px,
-    rgba(255, 255, 255, 0.025) 72px,
-    rgba(255, 255, 255, 0.025) 73px
-  );
-}
-
-@keyframes landing-speed-a {
-  from {
-    transform: rotateX(62deg) translateZ(-80px) translateX(0);
-  }
-  to {
-    transform: rotateX(62deg) translateZ(-80px) translateX(-50px);
-  }
-}
-
-.landing-splash__chevron-wrap {
-  position: absolute;
-  bottom: 18%;
-  left: 0;
-  right: 0;
-  height: 28%;
+.landing-splash__middle {
+  position: relative;
+  z-index: 2;
+  flex: 1;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.landing-splash__chevron {
-  width: min(92vw, 720px);
-  height: 100%;
-  background: repeating-linear-gradient(
-    -25deg,
-    #0d0d10 0px,
-    #0d0d10 14px,
-    rgba(225, 6, 0, 0.35) 14px,
-    rgba(225, 6, 0, 0.35) 28px
-  );
-  clip-path: polygon(0 100%, 50% 0, 100% 100%);
-  animation: landing-chevron-pulse 2.4s ease-in-out infinite;
-}
-
-@keyframes landing-chevron-pulse {
-  0%,
-  100% {
-    opacity: 0.85;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-6px);
-  }
-}
-
-.landing-splash__checkered {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 72px;
-  background-color: #0a0a0c;
-  background-image: linear-gradient(45deg, #1a1a1f 25%, transparent 25%),
-    linear-gradient(-45deg, #1a1a1f 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #1a1a1f 75%),
-    linear-gradient(-45deg, transparent 75%, #1a1a1f 75%);
-  background-size: 24px 24px;
-  background-position:
-    0 0,
-    0 12px,
-    12px -12px,
-    -12px 0;
-  opacity: 0.65;
-  animation: landing-checkered-scroll 1.2s linear infinite;
-  mask-image: linear-gradient(to top, black 60%, transparent);
-}
-
-@keyframes landing-checkered-scroll {
-  from {
-    background-position:
-      0 0,
-      0 12px,
-      12px -12px,
-      -12px 0;
-  }
-  to {
-    background-position:
-      24px 24px,
-      24px 36px,
-      36px 12px,
-      12px 24px;
-  }
+  min-height: 0;
 }
 
 .landing-splash__center {
   position: relative;
-  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -201,10 +64,13 @@
 
 .landing-splash__badge {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.12em;
-  font-size: clamp(4.5rem, 18vw, 8rem);
-  line-height: 0.85;
+  justify-content: center;
+  gap: 0 0.12em;
+  max-width: 96vw;
+  font-size: clamp(3.25rem, 14vw, 6.5rem);
+  line-height: 1;
   letter-spacing: -0.04em;
   text-shadow:
     0 0 60px rgba(225, 6, 0, 0.55),
@@ -218,6 +84,13 @@
 .landing-splash__badge-one {
   color: #e10600;
   animation: landing-badge-glow 2s ease-in-out infinite;
+}
+
+.landing-splash__badge-tracker {
+  font-size: 0.42em;
+  color: rgba(250, 250, 250, 0.94);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 @keyframes landing-badge-glow {
@@ -288,48 +161,10 @@
   }
 }
 
-.landing-splash__footer {
-  position: absolute;
-  bottom: 96px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(280px, 70vw);
-  z-index: 3;
-}
-
-.landing-splash__bar {
-  height: 3px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  overflow: hidden;
-}
-
-.landing-splash__bar-fill {
-  height: 100%;
-  width: 40%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #8b0000, #e10600, #ff4d4d);
-  animation: landing-bar 1.4s ease-in-out infinite;
-}
-
-@keyframes landing-bar {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(250%);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .landing-splash__aurora,
-  .landing-splash__speed-layer,
-  .landing-splash__checkered,
-  .landing-splash__chevron,
   .landing-splash__badge-one,
   .landing-splash__pulse,
-  .landing-splash__ring,
-  .landing-splash__bar-fill {
+  .landing-splash__ring {
     animation: none !important;
   }
 
