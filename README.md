@@ -1,6 +1,6 @@
 # F1 Tracker
 
-F1 Driver Standings tracker created with React JS & Typescript using the [F1 API](https://f1api.dev/).
+F1 Driver Standings tracker created with React JS & Typescript using the [F1 API](https://f1api.dev/), it's slow but it's free!.
 
 ## Features
 
@@ -23,6 +23,13 @@ This project uses the [F1 API](https://f1api.dev/) which provides:
 - No authentication required
 - Free to use
 - Official F1 data
+
+## Endpoints Used
+
+- https://f1api.dev/api/current/drivers-championship
+- https://f1api.dev/api/current
+- https://f1api.dev/api/{season}/{round}/race
+- https://f1api.dev/api/{season}/{round}/sprint/race
 
 ## Getting Started
 
