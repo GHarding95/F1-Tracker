@@ -1,6 +1,6 @@
 # F1 Tracker
 
-F1 Driver Standings tracker created with React JS & Typescript using the [F1 API](https://f1api.dev/), it's slow but it's free!.
+F1 Driver Standings tracker created with React JS & Typescript using the [F1 API](https://f1api.dev/), it's slow but it's free!
 
 ## Features
 
