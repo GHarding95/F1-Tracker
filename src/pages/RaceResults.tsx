@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import ConstructorLogo from '../components/ConstructorLogo';
+import DriverFlag from '../components/DriverFlag';
 import useDriverSeasonResults from '../hooks/useDriverSeasonResults';
 
 type LocationState = {
   givenName?: string;
   familyName?: string;
+  nationality?: string;
+  flag?: string;
+  constructorId?: string;
+  teamName?: string;
 };
 
 const RaceResults: React.FC = () => {
@@ -17,6 +23,12 @@ const RaceResults: React.FC = () => {
 
   const fromNav = [state?.givenName, state?.familyName].filter(Boolean).join(' ').trim();
   const driverTitle = fromNav || meta.driverDisplayName || driverId || 'Driver';
+  const seasonYear = meta.season > 0 ? meta.season : new Date().getFullYear();
+
+  const headerFlag = meta.driverFlag ?? state?.flag ?? null;
+  const headerNationality = meta.driverNationality ?? state?.nationality ?? '';
+  const headerConstructorId = meta.constructorId ?? state?.constructorId ?? null;
+  const headerConstructorTeamName = meta.constructorTeamName ?? state?.teamName ?? null;
 
   const pointsTitle = (row: (typeof rows)[0]): string => {
     if (row.sprintPoints != null && row.sprintPoints > 0) {
@@ -64,11 +76,26 @@ const RaceResults: React.FC = () => {
           </Link>
         </nav>
 
-        <h1 className="font-bold text-3xl sm:text-4xl lg:text-5xl mt-2 py-4 heading pl-0 pr-4 sm:pr-6 F1-Bold">
-          {driverTitle}
-        </h1>
+        <div className="mt-2 py-4 pl-0 pr-4 sm:pr-6 heading flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          <h1 className="font-bold text-3xl sm:text-4xl lg:text-5xl F1-Bold flex-1 min-w-0">
+            {driverTitle}
+          </h1>
+          {(headerFlag || headerConstructorId) && (
+            <div className="flex items-center shrink-0 gap-3 [&>div]:ml-0 self-start sm:self-center">
+              {headerFlag && headerNationality && (
+                <DriverFlag flag={headerFlag} nationality={headerNationality} />
+              )}
+              {headerConstructorId != null && headerConstructorTeamName != null && (
+                <ConstructorLogo
+                  constructorId={headerConstructorId}
+                  teamName={headerConstructorTeamName}
+                />
+              )}
+            </div>
+          )}
+        </div>
         <h2 className="f1-red text-lg sm:text-xl font-semibold mb-6 px-1 Titillium">
-          {meta.season} {driverTitle} &mdash; race results
+          {seasonYear} race results
         </h2>
 
         {loading ? (

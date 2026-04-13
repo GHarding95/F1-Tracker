@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { getFlagForNationality } from '../utils/nationalityFlag';
 
 const F1_API_BASE = 'https://f1api.dev/api';
 
@@ -7,6 +8,8 @@ export type DriverSeasonRaceRow = {
   grandPrix: string;
   dateDisplay: string;
   team: string;
+  /** Constructor `teamId` from the API (for header badge; same id as main-page cards). */
+  teamId: string;
   racePosition: string;
   pointsTotal: number;
   racePoints: number;
@@ -21,6 +24,10 @@ export type DriverSeasonRaceRow = {
 export type DriverSeasonMeta = {
   season: number;
   driverDisplayName: string | null;
+  driverNationality: string | null;
+  driverFlag: string | null;
+  constructorId: string | null;
+  constructorTeamName: string | null;
 };
 
 type CalendarRace = {
@@ -68,8 +75,8 @@ type RaceApiResult = {
   time?: string | null;
   fastLap?: string | null;
   retired?: string | null;
-  driver?: { driverId?: string; name?: string; surname?: string };
-  team?: { teamName?: string };
+  driver?: { driverId?: string; name?: string; surname?: string; nationality?: string };
+  team?: { teamName?: string; teamId?: string };
 };
 
 type SprintApiRow = {
@@ -87,6 +94,13 @@ function normalizeCircuitFromRacePayload(
   return circuit.country ?? fallbackGrandPrix;
 }
 
+type ChampionshipRow = {
+  driverId?: string;
+  teamId?: string;
+  driver?: { name?: string; surname?: string; nationality?: string };
+  team?: { teamId?: string; teamName?: string };
+};
+
 const useDriverSeasonResults = (
   driverId: string | undefined
 ): [DriverSeasonRaceRow[], boolean, string | null, DriverSeasonMeta] => {
@@ -95,24 +109,82 @@ const useDriverSeasonResults = (
   const [error, setError] = useState<string | null>(null);
   const [meta, setMeta] = useState<DriverSeasonMeta>({
     season: new Date().getFullYear(),
-    driverDisplayName: null
+    driverDisplayName: null,
+    driverNationality: null,
+    driverFlag: null,
+    constructorId: null,
+    constructorTeamName: null,
   });
+  const racesHeaderSealedRef = useRef(false);
 
   useEffect(() => {
     if (!driverId) {
       setRows([]);
       setLoading(false);
       setError(null);
+      racesHeaderSealedRef.current = false;
+      setMeta({
+        season: new Date().getFullYear(),
+        driverDisplayName: null,
+        driverNationality: null,
+        driverFlag: null,
+        constructorId: null,
+        constructorTeamName: null,
+      });
       return;
     }
 
     let cancelled = false;
+    racesHeaderSealedRef.current = false;
 
-    const run = async (): Promise<void> => {
-      setLoading(true);
-      setError(null);
-      setRows([]);
+    setLoading(true);
+    setError(null);
+    setRows([]);
+    setMeta({
+      season: new Date().getFullYear(),
+      driverDisplayName: null,
+      driverNationality: null,
+      driverFlag: null,
+      constructorId: null,
+      constructorTeamName: null,
+    });
 
+    const applyStandingsHeader = async (): Promise<void> => {
+      try {
+        const res = await fetch(`${F1_API_BASE}/current/drivers-championship`);
+        if (!res.ok || cancelled) return;
+        const data = await res.json();
+        const list: ChampionshipRow[] = Array.isArray(data.drivers_championship)
+          ? data.drivers_championship
+          : [];
+        const row = list.find((d) => d.driverId === driverId);
+        if (!row || cancelled) return;
+
+        const nat = row.driver?.nationality;
+        const label =
+          [row.driver?.name, row.driver?.surname].filter(Boolean).join(' ').trim() || null;
+        const tid = row.teamId || row.team?.teamId || '';
+        const tname = row.team?.teamName ?? null;
+        const apiSeason = Number(data.season);
+
+        setMeta((m) => {
+          if (racesHeaderSealedRef.current) return m;
+          return {
+            ...m,
+            season: apiSeason > 0 ? apiSeason : m.season,
+            driverDisplayName: label ?? m.driverDisplayName,
+            driverNationality: nat ?? m.driverNationality,
+            driverFlag: nat ? getFlagForNationality(nat) : m.driverFlag,
+            constructorId: tid ? tid : m.constructorId,
+            constructorTeamName: tname ?? m.constructorTeamName,
+          };
+        });
+      } catch {
+        /* optional: race fetch still drives the page */
+      }
+    };
+
+    const loadRaces = async (): Promise<void> => {
       try {
         const calRes = await fetch(`${F1_API_BASE}/current`);
         if (!calRes.ok) {
@@ -128,6 +200,7 @@ const useDriverSeasonResults = (
           .sort((a, b) => a.round - b.round);
 
         let driverDisplayName: string | null = null;
+        const headerAcc = { driverNationality: null as string | null };
 
         const buildRow = async (calRace: CalendarRace): Promise<DriverSeasonRaceRow | null> => {
           const round = calRace.round;
@@ -151,6 +224,9 @@ const useDriverSeasonResults = (
           if (!driverDisplayName && found.driver) {
             const label = [found.driver.name, found.driver.surname].filter(Boolean).join(' ').trim();
             if (label) driverDisplayName = label;
+          }
+          if (!headerAcc.driverNationality && found.driver?.nationality) {
+            headerAcc.driverNationality = found.driver.nationality;
           }
 
           const grandPrix = normalizeCircuitFromRacePayload(
@@ -187,6 +263,7 @@ const useDriverSeasonResults = (
             grandPrix,
             dateDisplay,
             team: found.team?.teamName ?? '—',
+            teamId: found.team?.teamId ?? '',
             racePosition: String(found.position ?? '—'),
             pointsTotal,
             racePoints,
@@ -201,9 +278,21 @@ const useDriverSeasonResults = (
 
         const built = await mapInChunks(due, 4, buildRow);
         const filtered = built.filter((r): r is DriverSeasonRaceRow => r != null);
+        const lastRow = filtered[filtered.length - 1];
+        const nat = headerAcc.driverNationality;
 
         if (!cancelled) {
-          setMeta({ season, driverDisplayName });
+          racesHeaderSealedRef.current = true;
+          setMeta((m) => ({
+            ...m,
+            season,
+            driverDisplayName: driverDisplayName ?? m.driverDisplayName,
+            driverNationality: nat ?? m.driverNationality,
+            driverFlag: nat ? getFlagForNationality(nat) : m.driverFlag,
+            constructorId: lastRow?.teamId ? lastRow.teamId : m.constructorId,
+            constructorTeamName:
+              lastRow?.team && lastRow.team !== '—' ? lastRow.team : m.constructorTeamName,
+          }));
           setRows(filtered);
           setLoading(false);
         }
@@ -215,7 +304,8 @@ const useDriverSeasonResults = (
       }
     };
 
-    void run();
+    void applyStandingsHeader();
+    void loadRaces();
 
     return () => {
       cancelled = true;

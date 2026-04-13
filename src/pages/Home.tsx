@@ -31,7 +31,11 @@ const Home: React.FC = () => {
                 to={`/race-results/${encodeURIComponent(standing.Driver.driverId)}`}
                 state={{
                   givenName: standing.Driver.givenName,
-                  familyName: standing.Driver.familyName
+                  familyName: standing.Driver.familyName,
+                  nationality: standing.Driver.nationality,
+                  flag: standing.Driver.flag,
+                  constructorId: standing.Constructors[0].constructorId,
+                  teamName: standing.Constructors[0].name,
                 }}
                 className="driver-card-link"
               >
@@ -61,7 +65,11 @@ const Home: React.FC = () => {
                       to={`/race-results/${encodeURIComponent(standing.Driver.driverId)}`}
                       state={{
                         givenName: standing.Driver.givenName,
-                        familyName: standing.Driver.familyName
+                        familyName: standing.Driver.familyName,
+                        nationality: standing.Driver.nationality,
+                        flag: standing.Driver.flag,
+                        constructorId: standing.Constructors[0].constructorId,
+                        teamName: standing.Constructors[0].name,
                       }}
                       className="driver-card-link"
                     >

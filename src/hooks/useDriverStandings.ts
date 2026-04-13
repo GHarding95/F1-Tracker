@@ -1,39 +1,12 @@
 import { useEffect, useState } from 'react';
 import { DriverStanding } from '../card/types';
+import { getFlagForNationality } from '../utils/nationalityFlag';
 
 // F1 API - Direct championship standings endpoint
 const F1_API_BASE_URL = 'https://f1api.dev/api';
 
 // API URLs
 const getChampionshipStandingsUrl = () => `${F1_API_BASE_URL}/current/drivers-championship`;
-
-// Flag mapping for driver nationalities
-const getFlagForNationality = (nationality: string): string => {
-  const flagMap: { [key: string]: string } = {
-    'Australia': '/assets/flags/flagAustralian.jpg',
-    'Great Britain': '/assets/flags/flagBritish.jpg',
-    'United Kingdom': '/assets/flags/flagBritish.jpg',
-    'Netherlands': '/assets/flags/flagDutch.jpg',
-    'Spain': '/assets/flags/flagSpanish.png',
-    'Monaco': '/assets/flags/flagMonaco.png',
-    'Canada': '/assets/flags/flagCanadian.jpg',
-    'Denmark': '/assets/flags/flagDanish.jpg',
-    'Japan': '/assets/flags/flagJapan.jpg',
-    'Thailand': '/assets/flags/flagThai.jpg',
-    'Germany': '/assets/flags/flagGerman.jpg',
-    'New Zealand': '/assets/flags/flagAustralian.jpg', // Using Australian flag as fallback
-    'Argentina': '/assets/flags/flagSpanish.png', // Using Spanish flag as fallback
-    'Finland': '/assets/flags/flagFinnish.jpg',
-    'China': '/assets/flags/flagChina.jpg',
-    'France': '/assets/flags/flagFrench.jpg',
-    'Mexico': '/assets/flags/flagMexican.jpg',
-    'United States': '/assets/flags/flagAmerican.jpg',
-    'USA': '/assets/flags/flagAmerican.jpg',
-    'Austria': '/assets/flags/flagGerman.jpg' // Using German flag as fallback for Austria
-  };
-  
-  return flagMap[nationality] || '/assets/flags/flagBritish.jpg'; // Default to British flag
-};
 
 const useDriverStandings = (): [DriverStanding[], boolean, string | null] => {
   const [driverStandings, setDriverStandings] = useState<DriverStanding[]>([]);
