@@ -57,6 +57,15 @@ function todayIso(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+/** e.g. 1 / "1" / "P1" → "P1" so Race and Sprint columns match */
+function formatFinishPosition(raw: string): string {
+  const s = raw.trim();
+  if (s === '' || s === '—') return '—';
+  const m = /^P?(\d+)$/i.exec(s);
+  if (m) return `P${m[1]}`;
+  return s;
+}
+
 type RaceApiResult = {
   position?: string | number;
   points?: number;
@@ -70,7 +79,7 @@ type RaceApiResult = {
 
 type SprintApiRow = {
   driverId?: string;
-  position?: number;
+  position?: number | string;
   points?: number;
 };
 
@@ -257,7 +266,7 @@ const useDriverSeasonResults = (
                 sprintJson.races?.sprintRaceResults ?? sprintJson.races?.sprint_race_results ?? [];
               const sp = list.find((s) => s.driverId === driverId);
               if (sp) {
-                sprintPosition = String(sp.position ?? '—');
+                sprintPosition = formatFinishPosition(String(sp.position ?? '—'));
                 sprintPoints = typeof sp.points === 'number' ? sp.points : Number(sp.points) || 0;
               }
             } catch {
@@ -275,7 +284,7 @@ const useDriverSeasonResults = (
             dateDisplay,
             team: found.team?.teamName ?? '—',
             teamId: found.team?.teamId ?? '',
-            racePosition: String(found.position ?? '—'),
+            racePosition: formatFinishPosition(String(found.position ?? '—')),
             pointsTotal,
             racePoints,
             sprintPosition,

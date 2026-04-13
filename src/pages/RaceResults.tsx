@@ -121,7 +121,7 @@ const RaceResults: React.FC = () => {
           </div>
         ) : (
           <div className="overflow-x-auto rounded-xl border border-[var(--f1-border)] bg-[rgba(12,12,18,0.6)] shadow-lg">
-            <table className="min-w-[760px] w-full text-left text-base Titillium border-collapse">
+            <table className="min-w-[680px] w-full text-left text-base Titillium border-collapse">
               <thead>
                 <tr className="border-b border-[var(--f1-border)] bg-[rgba(255,255,255,0.03)]">
                   <th scope="col" className="py-4 px-3 sm:px-5 text-base font-semibold text-[var(--f1-muted)]">
@@ -141,15 +141,9 @@ const RaceResults: React.FC = () => {
                   </th>
                   <th
                     scope="col"
-                    className="py-4 px-3 sm:px-5 text-base font-semibold text-[var(--f1-muted)] text-right hidden sm:table-cell"
-                  >
-                    Grid
-                  </th>
-                  <th
-                    scope="col"
                     className="py-4 px-3 sm:px-5 text-base font-semibold text-[var(--f1-muted)] text-right"
                   >
-                    Race pos.
+                    Race
                   </th>
                   <th
                     scope="col"
@@ -189,14 +183,11 @@ const RaceResults: React.FC = () => {
                     <td className="py-4 px-3 sm:px-5 text-base text-right font-variant-numeric tabular-nums hidden md:table-cell text-[var(--f1-muted)]">
                       {row.sprintPosition != null ? (
                         <span title={`Sprint points: ${row.sprintPoints ?? 0}`}>
-                          P{row.sprintPosition}
+                          {row.sprintPosition}
                         </span>
                       ) : (
                         '—'
                       )}
-                    </td>
-                    <td className="py-4 px-3 sm:px-5 text-base text-right font-variant-numeric tabular-nums hidden sm:table-cell text-[var(--f1-muted)]">
-                      {row.grid}
                     </td>
                     <td
                       className="py-4 px-3 sm:px-5 text-base text-right font-variant-numeric tabular-nums"
