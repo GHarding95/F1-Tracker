@@ -1,4 +1,5 @@
 import React from 'react';
+import ConstructorLogo from '../components/ConstructorLogo';
 import '../card/card.css';
 import { DriverStanding } from './types';
 
@@ -32,9 +33,12 @@ const Card: React.FC<CardProps> = ({ driverStanding, position }) => {
           </div>
         </div>
 
-        <div className='py-3'>
-          <p className='F1 driver-card-team'>{Constructors[0].name}</p>
-          <p className='text-3xl driver-card-number'>{Driver.permanentNumber}</p>
+        <div className='py-3 flex items-center justify-between gap-3'>
+          <div className='min-w-0'>
+            <p className='F1 driver-card-team'>{Constructors[0].name}</p>
+            <p className='text-3xl driver-card-number'>{Driver.permanentNumber}</p>
+          </div>
+          <ConstructorLogo constructorId={Constructors[0].constructorId} teamName={Constructors[0].name} />
         </div>
 
       </div>
