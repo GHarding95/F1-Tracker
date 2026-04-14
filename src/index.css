@@ -20,22 +20,22 @@
 
 @font-face {
   font-family: F1;
-  src: url(./assets/fonts/Formula1-Regular.ttf);
+  src: url(./fonts/Formula1-Regular.ttf);
 }
 
 @font-face {
   font-family: F1-Bold;
-  src: url(./assets/fonts/Formula1-Bold.ttf);
+  src: url(./fonts/Formula1-Bold.ttf);
 }
 
 @font-face {
   font-family: F1-Wide;
-  src: url(./assets/fonts/Formula1-Wide.ttf);
+  src: url(./fonts/Formula1-Wide.ttf);
 }
 
 @font-face {
   font-family: Titillium;
-  src: url(./assets/fonts/TitilliumWeb.ttf);
+  src: url(./fonts/TitilliumWeb.ttf);
 }
 
 :root {
