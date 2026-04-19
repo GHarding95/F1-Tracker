@@ -1,8 +1,7 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import RaceResults from './pages/RaceResults';
 
 const App: React.FC = () => {
   return (
@@ -11,7 +10,7 @@ const App: React.FC = () => {
       <div className="app-shell__content flex flex-col flex-1 w-full min-w-0">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/race-results/:driverId" element={<RaceResults />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
       </div>

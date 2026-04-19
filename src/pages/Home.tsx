@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Card from '../card/Card';
 import LandingSplash from '../components/LandingSplash';
 import useDriverStandings from '../hooks/useDriverStandings';
@@ -26,21 +25,12 @@ const Home: React.FC = () => {
         <div className="block xl:hidden">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {driverStandings.map((standing, index) => (
-              <Link
+              <div
                 key={standing.Driver.driverId}
-                to={`/race-results/${encodeURIComponent(standing.Driver.driverId)}`}
-                state={{
-                  givenName: standing.Driver.givenName,
-                  familyName: standing.Driver.familyName,
-                  nationality: standing.Driver.nationality,
-                  flag: standing.Driver.flag,
-                  constructorId: standing.Constructors[0].constructorId,
-                  teamName: standing.Constructors[0].name,
-                }}
                 className="driver-card-link"
               >
                 <Card driverStanding={standing} position={index + 1} />
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -60,21 +50,12 @@ const Home: React.FC = () => {
               rows.push(
                 <div className="flex justify-evenly mb-4" key={i}>
                   {rowDrivers.map((standing, index) => (
-                    <Link
+                    <div
                       key={standing.Driver.driverId}
-                      to={`/race-results/${encodeURIComponent(standing.Driver.driverId)}`}
-                      state={{
-                        givenName: standing.Driver.givenName,
-                        familyName: standing.Driver.familyName,
-                        nationality: standing.Driver.nationality,
-                        flag: standing.Driver.flag,
-                        constructorId: standing.Constructors[0].constructorId,
-                        teamName: standing.Constructors[0].name,
-                      }}
                       className="driver-card-link"
                     >
                       <Card driverStanding={standing} position={start + index + 1} />
-                    </Link>
+                    </div>
                   ))}
                 </div>
               );

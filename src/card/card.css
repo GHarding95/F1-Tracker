@@ -145,9 +145,8 @@
   margin-top: 1.75rem;
 }
 
-/* Link wraps the card for routing; contents keeps the card as the grid/flex item (original layout). */
+/* Wrapper kept for layout stability (was previously a router Link). */
 .driver-card-link {
   display: contents;
-  text-decoration: none;
-  color: inherit;
 }
+
