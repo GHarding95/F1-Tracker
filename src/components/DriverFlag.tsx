@@ -11,7 +11,13 @@ const DriverFlag: React.FC<DriverFlagProps> = ({ flag, nationality }) => {
 
   return (
     <div className="flex-shrink-0 ml-2">
-      <img className="flag" src={flag} alt={`${nationality} flag`} />
+      <img
+        className="flag"
+        src={flag}
+        alt={`${nationality} flag`}
+        loading="lazy"
+        decoding="async"
+      />
     </div>
   );
 };

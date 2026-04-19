@@ -86,7 +86,14 @@ const ConstructorLogo: React.FC<ConstructorLogoProps> = ({ constructorId, teamNa
       aria-label={`${teamName} logo`}
     >
       <div className="constructor-logo-circle" style={circleStyle}>
-        <img className="constructor-logo-img" src={config.src} alt="" draggable={false} />
+        <img
+          className="constructor-logo-img"
+          src={config.src}
+          alt=""
+          draggable={false}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </div>
   );
